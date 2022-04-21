@@ -23,13 +23,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sql);
     }
 
-    public Boolean insert(String header, String datetime, String text, String author) {
+    public Boolean isEmpty(){
+        Cursor cursor = this.getData();
+        return cursor.getCount() == 0;
+    }
+
+    public Boolean add(String header, String datetime, String text, String author) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("header", header);
         values.put("datetime", datetime);
         values.put("text", text);
         values.put("author", author);
+        long result = db.insert("News", null, values);
+        return result != -1;
+    }
+
+    public Boolean add(NewsModel news) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("header", news.Header);
+        values.put("datetime", news.Datetime);
+        values.put("text", news.Text);
+        values.put("author", news.Author);
         long result = db.insert("News", null, values);
         return result != -1;
     }
