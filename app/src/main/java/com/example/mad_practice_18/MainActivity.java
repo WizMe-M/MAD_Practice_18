@@ -1,6 +1,5 @@
 package com.example.mad_practice_18;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,7 +7,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
