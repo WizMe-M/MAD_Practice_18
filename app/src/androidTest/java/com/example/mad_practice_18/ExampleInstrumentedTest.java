@@ -1,4 +1,4 @@
-package com.example.mad_practice_sqlitenews;
+package com.example.mad_practice_18;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.mad_practice_sqlitenews", appContext.getPackageName());
+        assertEquals("com.example.MAD_Practice_18", appContext.getPackageName());
     }
 }

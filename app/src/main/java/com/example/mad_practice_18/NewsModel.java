@@ -1,4 +1,4 @@
-package com.example.mad_practice_sqlitenews;
+package com.example.mad_practice_18;
 
 public class NewsModel {
     public String Header;
