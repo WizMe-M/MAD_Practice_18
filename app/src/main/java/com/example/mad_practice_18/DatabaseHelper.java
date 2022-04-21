@@ -8,27 +8,43 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
-        super(context, "news.db", null, 1);
+        super(context, "news_service.db", null, 1);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sql = "create Table News(header primary key, datetime, text, author)";
-        sqLiteDatabase.execSQL(sql);
+    public void onCreate(SQLiteDatabase db) {
+        //sql запрос в порядке
+        String createDbSql = "create Table News(header primary key, datetime, text, author); "
+                + "create Table User(login primary key, password, is_admin default 0); "
+                + "insert into User(login, password, is_admin) values ('admin', 'admin', 1), ('reader', 'reader', 0)";
+        db.execSQL(createDbSql);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        String sql = "drop Table if exists News";
-        sqLiteDatabase.execSQL(sql);
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        dropAll(db);
+        onCreate(db);
     }
 
-    public Boolean isEmpty(){
-        Cursor cursor = this.getData();
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        dropAll(db);
+        db.setVersion(oldVersion);
+        onCreate(db);
+    }
+
+    private void dropAll(SQLiteDatabase db) {
+        String dropAllSql = "drop Table if exists News; " +
+                "drop Table if exists User";
+        db.execSQL(dropAllSql);
+    }
+
+    public Boolean newsEmpty() {
+        Cursor cursor = this.getNews();
         return cursor.getCount() == 0;
     }
 
-    public Boolean add(String header, String datetime, String text, String author) {
+    public Boolean addNews(String header, String datetime, String text, String author) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("header", header);
@@ -39,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public Boolean add(NewsModel news) {
+    public Boolean addNews(NewsModel news) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("header", news.Header);
@@ -50,9 +66,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public Cursor getData() {
+    public Cursor getNews() {
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "Select * from News";
         return db.rawQuery(sql, null);
+    }
+
+    public UserModel findUser(String login, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "Select * from User";
+        Cursor data = db.rawQuery(sql, null);
+        while (data.moveToNext()) {
+            String s1 = data.getString(0);
+            String s2 = data.getString(1);
+            if (login.equals(s1) && password.equals(s2)) {
+                Boolean isAdmin = data.getInt(2) == 1;
+                return new UserModel(s1, s2, isAdmin);
+            }
+        }
+        data.close();
+        return null;
+    }
+
+    public Boolean addReader(String login, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("login", login);
+        values.put("password", password);
+        long result = db.insert("User", null, values);
+        return result != -1;
     }
 }
