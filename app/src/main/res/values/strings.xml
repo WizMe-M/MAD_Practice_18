@@ -2,10 +2,10 @@
     <string name="app_name">Новости</string>
     <string name="header">Заголовок</string>
     <string name="main_text">Главный текст</string>
-    <string name="author">Автор</string>
+    <string name="news_author">Автор</string>
     <string name="publication_date">Дата публикации</string>
     <string name="news_list">Лента новостей!</string>
-    <string name="add_news">Добавить новсть</string>
+    <string name="add_news">Добавить новость</string>
     <string name="register">Зарегистрироваться</string>
     <string name="register_reader">Регистрация читателя</string>
     <string name="login">Логин</string>
@@ -15,4 +15,8 @@
     <string name="i_not_have_account">У меня нет аккаунта…</string>
     <string name="authorize">Войти</string>
     <string name="edit">Изменить</string>
+    <string name="input_news_date">Дата публикации</string>
+    <string name="news_main_text">Основное содержимое публикации…</string>
+    <string name="news_header">Заголовок</string>
+    <string name="add_news_label">Добавление новости</string>
 </resources>

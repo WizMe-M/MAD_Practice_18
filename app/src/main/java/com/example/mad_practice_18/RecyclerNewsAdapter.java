@@ -12,20 +12,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class RecyclerNewsAdapter extends RecyclerView.Adapter<RecyclerNewsAdapter.ViewHolder> {
-
+    private final NewsOnClickListener onClickListener;
     private final LayoutInflater inflater;
     private final List<NewsModel> news;
 
-    public RecyclerNewsAdapter(Context context, List<NewsModel> news) {
+    public interface NewsOnClickListener {
+        void onClick(int position);
+    }
+
+    public RecyclerNewsAdapter(Context context, List<NewsModel> news, NewsOnClickListener listener) {
         this.inflater = LayoutInflater.from(context);
         this.news = news;
+        onClickListener = listener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.recycler_news, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, onClickListener);
     }
 
     @Override
@@ -42,16 +47,25 @@ public class RecyclerNewsAdapter extends RecyclerView.Adapter<RecyclerNewsAdapte
         return news.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView header, datetime,text, author;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        final TextView header, datetime, text, author;
+        private final NewsOnClickListener onClickListener;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, NewsOnClickListener listener) {
             super(view);
 
             header = view.findViewById(R.id.header_tv);
             datetime = view.findViewById(R.id.datetime_tv);
             text = view.findViewById(R.id.main_text_tv);
             author = view.findViewById(R.id.author_tv);
+
+            onClickListener = listener;
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onClickListener.onClick(getAdapterPosition());
         }
     }
 }

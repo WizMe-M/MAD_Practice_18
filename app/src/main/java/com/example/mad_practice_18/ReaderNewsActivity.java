@@ -1,13 +1,14 @@
 package com.example.mad_practice_18;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
-public class ReaderNewsActivity extends AppCompatActivity {
+
+public class ReaderNewsActivity extends AppCompatActivity implements RecyclerNewsAdapter.NewsOnClickListener {
 
     DatabaseHelper databaseHelper;
     RecyclerView newsRecycler;
@@ -18,10 +19,10 @@ public class ReaderNewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reader_news);
         databaseHelper = new DatabaseHelper(this);
 
-        if(databaseHelper.newsEmpty()){
-                databaseHelper.addNews(new NewsModel("Второе пришествие", "07.04.2022", "Алексей Шубин, в народе известынй как Алёша Попович (прозвище, дарованное Соколовой) явился в техникум ради того, чтобы усердно учиться", "ТимкинМД"));
-                databaseHelper.addNews(new NewsModel("Сногсшибательная блезнь", "02.04.2022", "По Канализации прошла ужасающая дух новость. Народный артист Канализации, харизматичный певец, художник, актёр Большого и Малого театра и крайне интересная личность, Стас 'Дробышевский' Гайниев слёг от неизвестной болезни и не смог прийти на семейный просмотр фильма!", "Остапенко Лев"));
-                databaseHelper.addNews("Великая победа", "07.04.2022", "Андрей Кытин спустя долгого времени и ненасытного боя в великолепной, красивой игре Elden Ring, смог победить могучего врага 'Практика Щаникова' и вышел на улицу с улыбкой", "Алексей Шубин");
+        if (databaseHelper.newsEmpty()) {
+            databaseHelper.addNews(new NewsModel("Второе пришествие", "07.04.2022", "Алексей Шубин, в народе известынй как Алёша Попович (прозвище, дарованное Соколовой) явился в техникум ради того, чтобы усердно учиться", "ТимкинМД"));
+            databaseHelper.addNews(new NewsModel("Сногсшибательная блезнь", "02.04.2022", "По Канализации прошла ужасающая дух новость. Народный артист Канализации, харизматичный певец, художник, актёр Большого и Малого театра и крайне интересная личность, Стас 'Дробышевский' Гайниев слёг от неизвестной болезни и не смог прийти на семейный просмотр фильма!", "Остапенко Лев"));
+            databaseHelper.addNews("Великая победа", "07.04.2022", "Андрей Кытин спустя долгого времени и ненасытного боя в великолепной, красивой игре Elden Ring, смог победить могучего врага 'Практика Щаникова' и вышел на улицу с улыбкой", "Алексей Шубин");
         }
 
         ArrayList<NewsModel> newsList = new ArrayList<>();
@@ -37,6 +38,11 @@ public class ReaderNewsActivity extends AppCompatActivity {
         }
 
         newsRecycler = findViewById(R.id.news_list_rv);
-        newsRecycler.setAdapter(new RecyclerNewsAdapter(getApplicationContext(), newsList));
+        newsRecycler.setAdapter(new RecyclerNewsAdapter(getApplicationContext(), newsList, this));
+    }
+
+    @Override
+    public void onClick(int position) {
+        //doing nothing
     }
 }

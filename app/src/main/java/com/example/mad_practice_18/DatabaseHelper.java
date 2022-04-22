@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context, "news_service.db", null, 1);
@@ -95,5 +97,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("password", password);
         long result = db.insert("User", null, values);
         return result != -1;
+    }
+
+    public ArrayList<NewsModel> getAllNewsList(){
+        ArrayList<NewsModel> results = new ArrayList<>();
+        Cursor data = this.getNews();
+        while (data.moveToNext()){
+            String header = data.getString(0);
+            String text = data.getString(1);
+            String datetime = data.getString(2);
+            String author = data.getString(3);
+
+            NewsModel model = new NewsModel(header, datetime, text, author);
+            results.add(model);
+        }
+        data.close();
+        return results;
     }
 }
