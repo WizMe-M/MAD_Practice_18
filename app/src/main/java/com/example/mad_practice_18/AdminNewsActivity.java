@@ -22,4 +22,9 @@ public class AdminNewsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NewsInfoActivity.class);
         startActivity(intent);
     }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("news_info", null);
+    }
 }

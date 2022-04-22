@@ -14,4 +14,5 @@
     <string name="authorization">Авторизация</string>
     <string name="i_not_have_account">У меня нет аккаунта…</string>
     <string name="authorize">Войти</string>
+    <string name="edit">Изменить</string>
 </resources>

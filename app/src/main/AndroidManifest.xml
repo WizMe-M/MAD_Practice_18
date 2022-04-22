@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MAD_Practice_18">
         <activity
+            android:name=".EditNewsActivity"
+            android:exported="true" />
+        <activity
             android:name=".AuthorizationActivity"
             android:exported="false" />
         <activity
