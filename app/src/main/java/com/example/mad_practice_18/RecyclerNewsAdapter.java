@@ -37,9 +37,9 @@ public class RecyclerNewsAdapter extends RecyclerView.Adapter<RecyclerNewsAdapte
     public void onBindViewHolder(@NonNull RecyclerNewsAdapter.ViewHolder holder, int position) {
         NewsModel news = this.news.get(position);
         holder.header.setText(news.Header);
-        holder.text.setText(news.Text);
+        holder.text.setText(news.MainText);
         holder.author.setText(news.Author);
-        holder.datetime.setText(news.Datetime);
+        holder.datetime.setText(news.Date);
     }
 
     @Override

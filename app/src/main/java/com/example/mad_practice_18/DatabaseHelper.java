@@ -10,13 +10,13 @@ import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
-        super(context, "news_service.db", null, 1);
+        super(context, "news_service.db", null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         //sql запрос в порядке
-        String createDbSql = "create Table News(header primary key, datetime, text, author); "
+        String createDbSql = "create Table News(id int primary key, header, release_date, main_text, author); "
                 + "create Table User(login primary key, password, is_admin default 0); "
                 + "insert into User(login, password, is_admin) values ('admin', 'admin', 1), ('reader', 'reader', 0)";
         db.execSQL(createDbSql);
@@ -50,22 +50,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("header", header);
-        values.put("datetime", datetime);
-        values.put("text", text);
+        values.put("release_date", release_date);
+        values.put("main_text", text);
         values.put("author", author);
         long result = db.insert("News", null, values);
         return result != -1;
     }
 
     public Boolean addNews(NewsModel news) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("header", news.Header);
-        values.put("datetime", news.Datetime);
-        values.put("text", news.Text);
-        values.put("author", news.Author);
-        long result = db.insert("News", null, values);
-        return result != -1;
+        return addNews(news.Header, news.MainText, news.Date, news.Author);
     }
 
     public Cursor getNews() {
@@ -99,19 +92,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public ArrayList<NewsModel> getAllNewsList(){
+    public ArrayList<NewsModel> getAllNewsList() {
         ArrayList<NewsModel> results = new ArrayList<>();
-        Cursor data = this.getNews();
-        while (data.moveToNext()){
-            String header = data.getString(0);
-            String text = data.getString(1);
-            String datetime = data.getString(2);
-            String author = data.getString(3);
+        Cursor data = getNews();
+        while (data.moveToNext()) {
+            int id = data.getInt(0);
+            String header = data.getString(1);
+            String text = data.getString(2);
+            String release_date = data.getString(3);
+            String author = data.getString(4);
 
-            NewsModel model = new NewsModel(header, datetime, text, author);
+            NewsModel model = new NewsModel(id, header, release_date, text, author);
             results.add(model);
         }
         data.close();
         return results;
+    }
+
+    public Boolean updateNews(NewsModel news) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("header", news.Header);
+        cv.put("main_text", news.MainText);
+        cv.put("release_date", news.Date);
+        cv.put("author", news.Author);
+        long result = db.update("News", cv, "_id = ?",
+                new String[]{String.valueOf(news.Id)});
+        return result != -1;
     }
 }

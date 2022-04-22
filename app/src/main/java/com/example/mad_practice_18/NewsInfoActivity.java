@@ -1,5 +1,6 @@
 package com.example.mad_practice_18;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,8 +24,8 @@ public class NewsInfoActivity extends AppCompatActivity {
         news = getIntent().getParcelableExtra("news_info");
 
         header.setText(news.Header);
-        text.setText(news.Text);
-        datetime.setText(news.Datetime);
+        text.setText(news.MainText);
+        datetime.setText(news.Date);
         author.setText(news.Author);
 
         edit.setOnClickListener(view -> {

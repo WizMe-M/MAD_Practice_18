@@ -4,18 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class NewsModel implements Parcelable {
+    public int Id;
     public String Header;
-    public String Datetime;
-    public String Text;
+    public String Date;
+    public String MainText;
     public String Author;
 
-    public NewsModel() {
-    }
-
-    public NewsModel(String header, String datetime, String text, String author) {
+    public NewsModel(int id, String header, String date, String mainText, String author) {
+        Id = id;
         Header = header;
-        Datetime = datetime;
-        Text = text;
+        Date = date;
+        MainText = mainText;
         Author = author;
     }
 
@@ -26,9 +25,10 @@ public class NewsModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int i) {
+        out.writeInt(Id);
         out.writeString(Header);
-        out.writeString(Text);
-        out.writeString(Datetime);
+        out.writeString(MainText);
+        out.writeString(Date);
         out.writeString(Author);
     }
 
@@ -42,13 +42,11 @@ public class NewsModel implements Parcelable {
         }
     };
 
-    /**
-     * recreate object from parcel
-     */
     private NewsModel(Parcel in) {
+        Id = in.readInt();
         Header = in.readString();
-        Text = in.readString();
-        Datetime = in.readString();
+        MainText = in.readString();
+        Date = in.readString();
         Author = in.readString();
     }
 }
