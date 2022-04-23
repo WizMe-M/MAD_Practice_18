@@ -11,6 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MAD_Practice_18">
         <activity
+            android:name=".SplashScreenActivity"
+            android:exported="true"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".AddNewsActivity"
             android:exported="false" />
         <activity
@@ -18,16 +28,12 @@
             android:exported="false" />
         <activity
             android:name=".AuthorizationActivity"
-            android:exported="true"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".RegistrationActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".AdminNewsActivity"
             android:exported="false"
