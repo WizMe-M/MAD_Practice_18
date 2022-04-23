@@ -15,22 +15,23 @@
             android:exported="false" />
         <activity
             android:name=".EditNewsActivity"
-            android:exported="true" />
-        <activity
-            android:name=".AuthorizationActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistrationActivity"
-            android:exported="true">
+            android:name=".AuthorizationActivity"
+            android:exported="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".AdminNewsActivity"
+            android:name=".RegistrationActivity"
             android:exported="false" />
+        <activity
+            android:name=".AdminNewsActivity"
+            android:exported="false"
+            android:launchMode="singleInstance" />
         <activity
             android:name=".NewsInfoActivity"
             android:exported="false" />

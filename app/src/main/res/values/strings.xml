@@ -19,4 +19,7 @@
     <string name="news_main_text">Основное содержимое публикации…</string>
     <string name="news_header">Заголовок</string>
     <string name="add_news_label">Добавление новости</string>
+    <string name="edit_news_label">Редактирование новости</string>
+    <string name="save_changes">Сохранить изменения</string>
+    <string name="delete">Удалить</string>
 </resources>

@@ -6,4 +6,80 @@
     android:layout_height="match_parent"
     tools:context=".EditNewsActivity">
 
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:autofillHints="no"
+        android:text="@string/edit_news_label"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/header_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="50dp"
+        android:autofillHints="no"
+        android:gravity="center"
+        android:hint="@string/news_header"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label" />
+
+    <EditText
+        android:id="@+id/main_text_et"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="30dp"
+        android:autofillHints="no"
+        android:gravity="top|start"
+        android:hint="@string/news_main_text"
+        android:inputType="text|textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_et" />
+
+    <EditText
+        android:id="@+id/datetime_et"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:autofillHints="no"
+        android:gravity="center"
+        android:hint="@string/input_news_date"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_text_et" />
+
+    <EditText
+        android:id="@+id/author_et"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:autofillHints="no"
+        android:gravity="center"
+        android:hint="@string/news_author"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/datetime_et" />
+
+    <Button
+        android:id="@+id/save_changes_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_changes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/author_et" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

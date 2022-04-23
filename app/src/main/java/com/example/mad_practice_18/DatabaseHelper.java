@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //sql запрос в порядке
-        String createDbSql = "create Table News(id int primary key, header, release_date, main_text, author); "
+        String createDbSql = "create Table News(_id integer primary key, header, release_date, main_text, author); "
                 + "create Table User(login primary key, password, is_admin default 0); "
                 + "insert into User(login, password, is_admin) values ('admin', 'admin', 1), ('reader', 'reader', 0)";
         db.execSQL(createDbSql);
@@ -41,12 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(dropAllSql);
     }
 
-    public Boolean newsEmpty() {
-        Cursor cursor = this.getNews();
-        return cursor.getCount() == 0;
-    }
-
-    public Boolean addNews(String header, String datetime, String text, String author) {
+    public Boolean addNews(String header, String release_date, String text, String author) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("header", header);
@@ -55,10 +51,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("author", author);
         long result = db.insert("News", null, values);
         return result != -1;
-    }
-
-    public Boolean addNews(NewsModel news) {
-        return addNews(news.Header, news.MainText, news.Date, news.Author);
     }
 
     public Cursor getNews() {
@@ -96,13 +88,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<NewsModel> results = new ArrayList<>();
         Cursor data = getNews();
         while (data.moveToNext()) {
-            int id = data.getInt(0);
+            int _id = data.getInt(0);
             String header = data.getString(1);
             String text = data.getString(2);
             String release_date = data.getString(3);
             String author = data.getString(4);
 
-            NewsModel model = new NewsModel(id, header, release_date, text, author);
+            NewsModel model = new NewsModel(_id, header, release_date, text, author);
             results.add(model);
         }
         data.close();
@@ -116,8 +108,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("main_text", news.MainText);
         cv.put("release_date", news.Date);
         cv.put("author", news.Author);
-        long result = db.update("News", cv, "_id = ?",
-                new String[]{String.valueOf(news.Id)});
+        long result = db.update("News", cv, "_id = " + news.Id, null);
+        return result != -1;
+    }
+
+    public Boolean deleteNews(NewsModel news) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete("News", "_id = " + news.Id, null);
         return result != -1;
     }
 }

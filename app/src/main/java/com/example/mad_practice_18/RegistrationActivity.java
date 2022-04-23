@@ -27,6 +27,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private void goToAuthorizationActivity() {
         Intent authorization = new Intent(this, AuthorizationActivity.class);
         startActivity(authorization);
+        finish();
     }
 
     private void register() {

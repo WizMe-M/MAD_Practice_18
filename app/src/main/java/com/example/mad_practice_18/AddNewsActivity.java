@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,13 +29,18 @@ public class AddNewsActivity extends AppCompatActivity {
         date = findViewById(R.id.datetime_et);
         author = findViewById(R.id.author_et);
 
-        String h, t, d, a;
-        h = header.getText().toString().trim();
-        t = text.getText().toString().trim();
-        d = date.getText().toString().trim();
-        a = author.getText().toString().trim();
+        String h = header.getText().toString().trim();
+        String t = text.getText().toString().trim();
+        String d = date.getText().toString().trim();
+        String a = author.getText().toString().trim();
+        if (h.isEmpty() || t.isEmpty() || d.isEmpty() || a.isEmpty()) {
+            Toast.makeText(this, "Необходимо заполнить все поля",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         database.addNews(h, t, d, a);
         Intent adminNews = new Intent(this, AdminNewsActivity.class);
         startActivity(adminNews);
+        finish();
     }
 }
