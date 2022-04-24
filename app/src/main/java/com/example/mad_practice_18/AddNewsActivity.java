@@ -39,8 +39,8 @@ public class AddNewsActivity extends AppCompatActivity {
             return;
         }
         database.addNews(h, t, d, a);
-        Intent adminNews = new Intent(this, AdminNewsActivity.class);
-        startActivity(adminNews);
+        Intent intent = new Intent(this, AdminNewsActivity.class);
+        startActivity(intent);
         finish();
     }
 }

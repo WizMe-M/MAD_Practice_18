@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class RegistrationActivity extends AppCompatActivity {
     DatabaseHelper database;
-    Button register, wantAuthorize;
+    Button wantAuthorize, register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,14 +20,12 @@ public class RegistrationActivity extends AppCompatActivity {
         database = new DatabaseHelper(this);
         wantAuthorize = findViewById(R.id.authorize_btn);
         register = findViewById(R.id.register_btn);
-        wantAuthorize.setOnClickListener(v -> goToAuthorizationActivity());
+        wantAuthorize.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AuthorizationActivity.class);
+            startActivity(intent);
+            finish();
+        });
         register.setOnClickListener(v -> register());
-    }
-
-    private void goToAuthorizationActivity() {
-        Intent authorization = new Intent(this, AuthorizationActivity.class);
-        startActivity(authorization);
-        finish();
     }
 
     private void register() {
@@ -43,7 +41,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         database.addReader(l, p);
 
-        Intent readerNews = new Intent(this, ReaderNewsActivity.class);
-        startActivity(readerNews);
+        Intent intent = new Intent(this, ReaderNewsActivity.class);
+        startActivity(intent);
     }
 }

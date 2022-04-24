@@ -1,6 +1,6 @@
 package com.example.mad_practice_18;
 
-import android.database.Cursor;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,5 +28,12 @@ public class ReaderNewsActivity extends AppCompatActivity implements RecyclerNew
     @Override
     public void onClick(int position) {
         //doing nothing
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, AuthorizationActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

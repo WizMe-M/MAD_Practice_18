@@ -19,28 +19,29 @@ public class NewsInfoActivity extends AppCompatActivity {
 
         database = new DatabaseHelper(this);
         TextView header = findViewById(R.id.header_tv);
-        TextView text = findViewById(R.id.main_text_tv);
-        TextView datetime = findViewById(R.id.datetime_tv);
+        TextView mainText = findViewById(R.id.main_text_tv);
+        TextView date = findViewById(R.id.date_tv);
         TextView author = findViewById(R.id.author_tv);
         Button edit = findViewById(R.id.edit_btn);
         Button delete = findViewById(R.id.delete_btn);
         news = getIntent().getParcelableExtra("news_info");
 
         header.setText(news.Header);
-        text.setText(news.MainText);
-        datetime.setText(news.Date);
+        mainText.setText(news.MainText);
+        date.setText(news.Date);
         author.setText(news.Author);
 
         edit.setOnClickListener(view -> {
-            Intent editNews = new Intent(this, EditNewsActivity.class);
-            editNews.putExtra("news_to_edit", news);
-            startActivity(editNews);
+            Intent intent = new Intent(this, EditNewsActivity.class);
+            intent.putExtra("news_to_edit", news);
+            startActivity(intent);
+            finish();
         });
 
         delete.setOnClickListener(view -> {
             database.deleteNews(news);
-            Intent adminNews = new Intent(this, AdminNewsActivity.class);
-            startActivity(adminNews);
+            Intent intent = new Intent(this, AdminNewsActivity.class);
+            startActivity(intent);
             finish();
         });
     }

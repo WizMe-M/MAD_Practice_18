@@ -21,13 +21,11 @@ public class AuthorizationActivity extends AppCompatActivity {
         wantRegister = findViewById(R.id.register_btn);
         authorize = findViewById(R.id.authorize_btn);
 
-        wantRegister.setOnClickListener(v -> goToRegistrationActivity());
+        wantRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(this, RegistrationActivity.class);
+            startActivity(intent);
+        });
         authorize.setOnClickListener(v -> authorize());
-    }
-
-    private void goToRegistrationActivity() {
-        Intent registration = new Intent(this, RegistrationActivity.class);
-        startActivity(registration);
     }
 
     private void authorize() {
@@ -36,7 +34,7 @@ public class AuthorizationActivity extends AppCompatActivity {
         password = findViewById(R.id.password_et);
 
         String l = login.getText().toString().trim();
-        String p = password.getText().toString().trim();
+        String p = password.getText().toString();
         UserModel user = database.findUser(l, p);
         if (user == null) {
             Toast.makeText(this, "Пользователя с такими данными нет в базе данных",

@@ -23,9 +23,10 @@ public class AdminNewsActivity extends AppCompatActivity implements RecyclerNews
         newsRecycler = findViewById(R.id.news_list_rv);
         database = new DatabaseHelper(this);
 
-        newsList = database.getAllNewsList();
-        newsRecycler.setAdapter(new RecyclerNewsAdapter(this, newsList, this));
-        addNews.setOnClickListener(v -> addNews());
+        addNews.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AddNewsActivity.class);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -35,20 +36,18 @@ public class AdminNewsActivity extends AppCompatActivity implements RecyclerNews
         newsRecycler.setAdapter(new RecyclerNewsAdapter(this, newsList, this));
     }
 
-    private void addNews() {
-        Intent addNews = new Intent(this, AddNewsActivity.class);
-        startActivity(addNews);
-    }
-
-    private void openNewsInfo(NewsModel model) {
+    @Override
+    public void onClick(int position) {
+        NewsModel selected = newsList.get(position);
         Intent intent = new Intent(this, NewsInfoActivity.class);
-        intent.putExtra("news_info", model);
+        intent.putExtra("news_info", selected);
         startActivity(intent);
     }
 
     @Override
-    public void onClick(int position) {
-        NewsModel selectedNews = newsList.get(position);
-        openNewsInfo(selectedNews);
+    public void onBackPressed() {
+        Intent intent = new Intent(this, AuthorizationActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

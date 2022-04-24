@@ -29,7 +29,7 @@ public class RecyclerNewsAdapter extends RecyclerView.Adapter<RecyclerNewsAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.recycler_news, parent, false);
+        View view = inflater.inflate(R.layout.news_recycler_view_item, parent, false);
         return new ViewHolder(view, onClickListener);
     }
 
@@ -37,9 +37,9 @@ public class RecyclerNewsAdapter extends RecyclerView.Adapter<RecyclerNewsAdapte
     public void onBindViewHolder(@NonNull RecyclerNewsAdapter.ViewHolder holder, int position) {
         NewsModel news = this.news.get(position);
         holder.header.setText(news.Header);
-        holder.text.setText(news.MainText);
+        holder.mainText.setText(news.MainText);
         holder.author.setText(news.Author);
-        holder.datetime.setText(news.Date);
+        holder.date.setText(news.Date);
     }
 
     @Override
@@ -48,15 +48,15 @@ public class RecyclerNewsAdapter extends RecyclerView.Adapter<RecyclerNewsAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final TextView header, datetime, text, author;
+        final TextView header, date, mainText, author;
         private final NewsOnClickListener onClickListener;
 
         public ViewHolder(View view, NewsOnClickListener listener) {
             super(view);
 
             header = view.findViewById(R.id.header_tv);
-            datetime = view.findViewById(R.id.datetime_tv);
-            text = view.findViewById(R.id.main_text_tv);
+            date = view.findViewById(R.id.date_tv);
+            mainText = view.findViewById(R.id.main_text_tv);
             author = view.findViewById(R.id.author_tv);
 
             onClickListener = listener;

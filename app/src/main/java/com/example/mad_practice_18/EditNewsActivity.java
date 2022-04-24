@@ -18,19 +18,19 @@ public class EditNewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_news);
 
         database = new DatabaseHelper(this);
-        EditText header, text, datetime, author;
         Button saveChanges;
         NewsModel news = getIntent().getParcelableExtra("news_to_edit");
-        header = findViewById(R.id.header_et);
-        text = findViewById(R.id.main_text_et);
-        datetime = findViewById(R.id.datetime_et);
-        author = findViewById(R.id.author_et);
+        EditText header = findViewById(R.id.header_et);
+        EditText text = findViewById(R.id.main_text_et);
+        EditText datetime = findViewById(R.id.datetime_et);
+        EditText author = findViewById(R.id.author_et);
         saveChanges = findViewById(R.id.save_changes_btn);
 
         header.setText(news.Header);
         text.setText(news.MainText);
         datetime.setText(news.Date);
         author.setText(news.Author);
+
         saveChanges.setOnClickListener(v -> {
             String h = header.getText().toString().trim();
             String t = text.getText().toString().trim();
@@ -47,8 +47,8 @@ public class EditNewsActivity extends AppCompatActivity {
             news.Date = d;
             news.Author = a;
             database.updateNews(news);
-            Intent adminNews = new Intent(this, AdminNewsActivity.class);
-            startActivity(adminNews);
+            Intent intent = new Intent(this, AdminNewsActivity.class);
+            startActivity(intent);
             finish();
         });
     }

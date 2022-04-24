@@ -9,16 +9,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
+    DatabaseHelper db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        db = new DatabaseHelper(this);
         ProgressBar progressBar = findViewById(R.id.progress_bar);
-        long loadingMillis = 2700;
+        long loadingMillis = 700;
 
         Intent authorization = new Intent(this, AuthorizationActivity.class);
-        CountDownTimer timer = new CountDownTimer(loadingMillis, 50) {
+        CountDownTimer timer = new CountDownTimer(loadingMillis, 10) {
             @Override
             public void onTick(long millisUntilFinished) {
                 double percent = 1 - 1.0 * millisUntilFinished / loadingMillis;
@@ -32,5 +35,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         };
         timer.start();
+        //initializing database while loading
+        db.getWritableDatabase();
     }
 }
