@@ -13,18 +13,27 @@ public class AdminNewsActivity extends AppCompatActivity implements RecyclerNews
     DatabaseHelper database;
     ArrayList<NewsModel> newsList;
     RecyclerView newsRecycler;
+    UserModel user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_news);
 
+        user = getIntent().getParcelableExtra("authorized");
         Button addNews = findViewById(R.id.add_news_btn);
+        Button addUser = findViewById(R.id.add_user_btn);
         newsRecycler = findViewById(R.id.news_list_rv);
         database = new DatabaseHelper(this);
 
         addNews.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddNewsActivity.class);
+            intent.putExtra("author", user);
+            startActivity(intent);
+        });
+
+        addUser.setOnClickListener(v -> {
+            Intent intent = new Intent(this, RegistrationActivity.class);
             startActivity(intent);
         });
     }
@@ -41,6 +50,7 @@ public class AdminNewsActivity extends AppCompatActivity implements RecyclerNews
         NewsModel selected = newsList.get(position);
         Intent intent = new Intent(this, NewsInfoActivity.class);
         intent.putExtra("news_info", selected);
+        intent.putExtra("author", user);
         startActivity(intent);
     }
 

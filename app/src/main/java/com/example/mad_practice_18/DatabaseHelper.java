@@ -5,10 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
+@RequiresApi(api = Build.VERSION_CODES.Q)
 public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context, "news", null, 1);
@@ -30,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void createAll(SQLiteDatabase db) {
-        db.execSQL("create table Users(login primary key, password, is_admin default 0)");
+        db.execSQL("create table Users(login primary key, password, is_admin)");
         db.execSQL("create table News(_id integer primary key, header, release_date, main_text, author);");
         db.execSQL("insert into Users(login, password, is_admin) values ('admin', 'admin', 1);");
     }
@@ -43,20 +47,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private void reinitialize(SQLiteDatabase db) {
         dropAll(db);
         createAll(db);
-
-        Log.wtf("DB initialize", "database tables after");
-        String sql = "SELECT name, sql FROM sqlite_master\n" +
-                "WHERE type='table'\n" +
-                "ORDER BY name;";
-        Cursor tables = db.rawQuery(sql, null);
-        while (tables.moveToNext()) {
-            Log.e("table in DB", String.format("%s ~ %s",
-                    tables.getString(0), tables.getString(1)));
-        }
-        tables.close();
     }
 
-    public void addNews(String header, String release_date, String text, String author) {
+    public void addNews(String header, String text, String release_date, String author) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("header", header);
@@ -74,8 +67,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (data.moveToNext()) {
             int _id = data.getInt(0);
             String header = data.getString(1);
-            String text = data.getString(2);
-            String release_date = data.getString(3);
+            String release_date = data.getString(2);
+            String text = data.getString(3);
             String author = data.getString(4);
 
             NewsModel model = new NewsModel(_id, header, release_date, text, author);
@@ -93,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String s1 = data.getString(0);
             String s2 = data.getString(1);
             if (login.equals(s1) && password.equals(s2)) {
-                Boolean isAdmin = data.getInt(2) == 1;
+                boolean isAdmin = data.getInt(2) == 1;
                 return new UserModel(s1, s2, isAdmin);
             }
         }
@@ -101,11 +94,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public void addReader(String login, String password) {
+    public void addUser(String login, String password, boolean isAdmin) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("login", login);
         values.put("password", password);
+        values.put("is_admin", isAdmin);
         db.insert("Users", null, values);
     }
 

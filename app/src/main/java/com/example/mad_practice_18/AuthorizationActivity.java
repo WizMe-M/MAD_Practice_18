@@ -1,16 +1,19 @@
 package com.example.mad_practice_18;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+@RequiresApi(api = Build.VERSION_CODES.Q)
 public class AuthorizationActivity extends AppCompatActivity {
     DatabaseHelper database;
-    Button wantRegister, authorize;
+    Button authorize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,13 +21,7 @@ public class AuthorizationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_authorization);
 
         database = new DatabaseHelper(this);
-        wantRegister = findViewById(R.id.register_btn);
-        authorize = findViewById(R.id.authorize_btn);
-
-        wantRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(this, RegistrationActivity.class);
-            startActivity(intent);
-        });
+        authorize = findViewById(R.id.admin_cb);
         authorize.setOnClickListener(v -> authorize());
     }
 
@@ -45,6 +42,7 @@ public class AuthorizationActivity extends AppCompatActivity {
         Intent newsActivity;
         if (user.IsAdmin) {
             newsActivity = new Intent(this, AdminNewsActivity.class);
+            newsActivity.putExtra("authorized", user);
         } else {
             newsActivity = new Intent(this, ReaderNewsActivity.class);
         }

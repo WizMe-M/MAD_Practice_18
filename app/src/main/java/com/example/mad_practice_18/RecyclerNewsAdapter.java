@@ -54,10 +54,10 @@ public class RecyclerNewsAdapter extends RecyclerView.Adapter<RecyclerNewsAdapte
         public ViewHolder(View view, NewsOnClickListener listener) {
             super(view);
 
-            header = view.findViewById(R.id.header_tv);
-            date = view.findViewById(R.id.date_tv);
-            mainText = view.findViewById(R.id.main_text_tv);
-            author = view.findViewById(R.id.author_tv);
+            header = view.findViewById(R.id.item_header_tv);
+            date = view.findViewById(R.id.item_date_tv);
+            mainText = view.findViewById(R.id.item_main_text_tv);
+            author = view.findViewById(R.id.item_author_tv);
 
             onClickListener = listener;
             view.setOnClickListener(this);
