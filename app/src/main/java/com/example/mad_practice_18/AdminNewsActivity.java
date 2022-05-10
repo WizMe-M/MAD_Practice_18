@@ -1,14 +1,17 @@
 package com.example.mad_practice_18;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+@RequiresApi(api = Build.VERSION_CODES.Q)
 public class AdminNewsActivity extends AppCompatActivity implements RecyclerNewsAdapter.NewsOnClickListener {
     DatabaseHelper database;
     ArrayList<NewsModel> newsList;

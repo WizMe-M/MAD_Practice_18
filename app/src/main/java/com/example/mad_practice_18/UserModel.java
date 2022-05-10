@@ -10,9 +10,9 @@ import androidx.annotation.RequiresApi;
 public class UserModel implements Parcelable {
     public String Login;
     public String Password;
-    public boolean IsAdmin;
+    public Boolean IsAdmin;
 
-    public UserModel(String login, String password, boolean isAdmin) {
+    public UserModel(String login, String password, Boolean isAdmin) {
         Login = login;
         Password = password;
         IsAdmin = isAdmin;
@@ -21,7 +21,7 @@ public class UserModel implements Parcelable {
     protected UserModel(Parcel in) {
         Login = in.readString();
         Password = in.readString();
-        IsAdmin = in.readBoolean();
+        IsAdmin = in.readByte() != 0;
     }
 
     public static final Creator<UserModel> CREATOR = new Creator<UserModel>() {
@@ -45,6 +45,6 @@ public class UserModel implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(Login);
         parcel.writeString(Password);
-        parcel.writeBoolean(IsAdmin);
+        parcel.writeByte((byte) (IsAdmin ? 1 : 0));
     }
 }
